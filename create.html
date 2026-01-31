@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Message – StageCraft</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="logo">StageCraft</div>
+  <button id="toggleView" class="ghost-btn">Preview</button>
+</header>
+
+<!-- BUILDER -->
+<div class="builder">
+
+  <!-- LEFT PANEL -->
+  <div class="editor" id="editorPanel">
+    <h2>Your Message</h2>
+
+    <label>Question</label>
+    <textarea
+      id="question"
+      rows="2"
+      placeholder="Do you love me?"
+      oninput="updatePreview()"
+    ></textarea>
+    <small>This is what the receiver will see</small>
+
+    <label>YES Button Text</label>
+    <input
+      id="yesText"
+      value="Yes ❤️"
+      oninput="updatePreview()"
+    />
+
+    <h3>NO Button Stages</h3>
+    <p class="hint">Button stays same. Text changes on each click.</p>
+
+    <div id="stages"></div>
+    <button class="ghost-btn" onclick="addStage()">+ Add NO stage</button>
+
+    <h3>Final Stage Effect</h3>
+    <select id="finalEffect">
+      <option value="stable">Stable (no effect)</option>
+      <option value="runaway">Runaway (escapes cursor)</option>
+      <option value="grow">YES grows</option>
+      <option value="shrink">NO shrinks</option>
+    </select>
+
+    <button class="btn primary" onclick="generateLink()">
+      Generate Shareable Link
+    </button>
+
+    <div id="shareLink" class="share-box"></div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="preview" id="previewPanel">
+    <div class="phone">
+      <p class="preview-label">Receiver Preview</p>
+
+      <h4 id="previewQuestion">Your question</h4>
+
+      <div class="buttons">
+        <button id="previewYes">Yes</button>
+        <button id="previewNo">No</button>
+      </div>
+
+      <p class="stage-indicator" id="stageInfo">Stage 1 of 1</p>
+
+      <button class="ghost-btn small" onclick="resetPreview()">
+        Reset preview
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<script src="effects.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
