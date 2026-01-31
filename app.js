@@ -35,14 +35,8 @@ function updatePreview() {
     .map(i => i.value)
     .filter(Boolean);
 
-  pq.innerText = qInput && qInput.value
-    ? qInput.value
-    : "Your question";
-
-  py.innerText = yesInput && yesInput.value
-    ? yesInput.value
-    : "Yes";
-
+  pq.innerText = qInput?.value || "Your question";
+  py.innerText = yesInput?.value || "Yes";
   pn.innerText = stageInputs[previewStage] || "No";
 
   info.innerText =
@@ -80,19 +74,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* =========================
    GENERATE SHAREABLE LINK
-   (WORKS IN FILE MODE + ONLINE)
 ========================= */
 function generateLink() {
   const data = {
-    question: document.getElementById("question").value || "",
-    yes: document.getElementById("yesText").value || "Yes",
+    question: document.getElementById("question")?.value || "",
+    yes: document.getElementById("yesText")?.value || "Yes",
     stages: stageInputs,
-    effect: document.getElementById("finalEffect").value
+    effect: document.getElementById("finalEffect")?.value
   };
 
   const encoded = btoa(
     unescape(encodeURIComponent(JSON.stringify(data)))
   );
+
+  // ⭐ IMPORTANT: save message id for dashboard
+  window.currentMessageId = encoded;
 
   let baseURL;
   if (location.protocol === "file:") {
@@ -104,19 +100,27 @@ function generateLink() {
   const link = `${baseURL}?data=${encoded}`;
 
   const box = document.getElementById("shareLink");
-  box.innerHTML = `
-    <p>Share this link:</p>
-    <input value="${link}" readonly onclick="this.select()" />
-  `;
+  if (box) {
+    box.innerHTML = `
+      <p>Share this link:</p>
+      <input value="${link}" readonly onclick="this.select()" />
+    `;
+  }
 }
-document.getElementryById("OpenStatusBtn")?.addEventListener("click",()+>{
-   if (!window.currentMessageId){
-      alert("Please generate the shareable link first.")
-      return:
-         }
-window.location.href =`dashboard.html?id=${window.currentMessageId}`;
-}
-)
+
+/* =========================
+   OPEN SENDER DASHBOARD
+========================= */
+document.getElementById("openStatusBtn")?.addEventListener("click", () => {
+  if (!window.currentMessageId) {
+    alert("Please generate the shareable link first.");
+    return;
+  }
+
+  window.location.href =
+    `dashboard.html?id=${window.currentMessageId}`;
+});
+
 
 
 
