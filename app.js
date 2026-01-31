@@ -109,3 +109,23 @@ function generateLink() {
     <input value="${link}" readonly onclick="this.select()" />
   `;
 }
+document.getElementryById("OpenStatusBtn")?.addEventListener("click",()+>{
+   if (!window.currentMessageId){
+      alert("Please generate the shareable link first.")
+      return:
+         }
+window.location.href =`dashboard.html?id=${window.currentMessageId}`;
+}
+)
+
+
+
+
+
+
+
+
+
+
+
+
